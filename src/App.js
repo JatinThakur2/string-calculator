@@ -60,7 +60,10 @@ const App = () => {
               Use new lines as separators: <code>1\n2,3</code>
             </li>
             <li>
-              Define custom delimiters: <code>//;\n1;2;3</code>
+              Define custom delimiters:{" "}
+              <code>
+                {"//"};{"\n"}1;2;3
+              </code>
             </li>
             <li>Negative numbers are not allowed</li>
           </ul>
