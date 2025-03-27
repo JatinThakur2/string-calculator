@@ -16,8 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest --watchAll --verbose"
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +40,19 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "jest": "^27.5.1"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JatinThakur2/string-calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JatinThakur2/string-calculator/issues"
+  },
+  "homepage": "https://github.com/JatinThakur2/string-calculator#readme"
 }
