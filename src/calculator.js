@@ -16,10 +16,15 @@ export function add(numbers) {
   // Replace newlines with the delimiter
   numbersString = numbersString.replace(/\n/g, delimiter);
 
-  if (numbersString.includes(delimiter)) {
-    const nums = numbersString.split(delimiter).map((num) => parseInt(num, 10));
-    return nums.reduce((sum, num) => sum + num, 0);
+  const nums = numbersString.split(delimiter).map((num) => parseInt(num, 10));
+
+  // Check for negative numbers
+  const negativeNumbers = nums.filter((num) => num < 0);
+  if (negativeNumbers.length > 0) {
+    throw new Error(
+      `negative numbers not allowed ${negativeNumbers.join(",")}`
+    );
   }
 
-  return parseInt(numbersString, 10);
+  return nums.reduce((sum, num) => sum + num, 0);
 }
