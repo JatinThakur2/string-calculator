@@ -1,8 +1,48 @@
+function extractDelimiters(delimiterPart) {
+  if (delimiterPart.startsWith("[")) {
+    const delimiters = [];
+    let i = 0;
+    while (i < delimiterPart.length) {
+      if (delimiterPart[i] === "[") {
+        const closeIndex = delimiterPart.indexOf("]", i);
+        if (closeIndex !== -1) {
+          const delimiter = delimiterPart.substring(i + 1, closeIndex);
+          delimiters.push(delimiter);
+          i = closeIndex + 1;
+          continue;
+        }
+      }
+      i++;
+    }
+    return delimiters;
+  }
+  return [delimiterPart];
+}
+
 export function add(numbers) {
   if (numbers === "") {
     return 0;
   }
 
+  const nums = parsnum(numbers); // Filter out any invalid numbers
+
+  validatenegnumber(nums);
+
+  // Ignore numbers greater than 1000
+  const filteredNums = nums.filter((num) => num <= 1000);
+
+  return filteredNums.reduce((sum, num) => sum + num, 0);
+}
+function validatenegnumber(nums) {
+  const negativeNumbers = nums.filter((num) => num < 0);
+  if (negativeNumbers.length > 0) {
+    throw new Error(
+      `negative numbers not allowed ${negativeNumbers.join(",")}`
+    );
+  }
+}
+
+function parsnum(numbers) {
   let delimiters = [","];
   let numbersString = numbers;
 
@@ -13,27 +53,7 @@ export function add(numbers) {
     numbersString = numbers.substring(newLineIndex + 1);
 
     // Handle multiple delimiters with format //[delim1][delim2]...\n
-    if (delimiterPart.startsWith("[")) {
-      delimiters = [];
-      let i = 0;
-      while (i < delimiterPart.length) {
-        if (delimiterPart[i] === "[") {
-          const closeIndex = delimiterPart.indexOf("]", i);
-          if (closeIndex !== -1) {
-            const delimiter = delimiterPart.substring(i + 1, closeIndex);
-            delimiters.push(delimiter);
-            i = closeIndex + 1;
-          } else {
-            i++;
-          }
-        } else {
-          i++;
-        }
-      }
-    } else {
-      // Simple single delimiter case //;\n
-      delimiters = [delimiterPart];
-    }
+    delimiters = extractDelimiters(delimiterPart);
   }
 
   // Replace newlines with a comma first
@@ -52,17 +72,5 @@ export function add(numbers) {
     .split(",")
     .map((num) => parseInt(num, 10))
     .filter((num) => !isNaN(num)); // Filter out any invalid numbers
-
-  // Check for negative numbers
-  const negativeNumbers = nums.filter((num) => num < 0);
-  if (negativeNumbers.length > 0) {
-    throw new Error(
-      `negative numbers not allowed ${negativeNumbers.join(",")}`
-    );
-  }
-
-  // Ignore numbers greater than 1000
-  const filteredNums = nums.filter((num) => num <= 1000);
-
-  return filteredNums.reduce((sum, num) => sum + num, 0);
+  return nums;
 }
